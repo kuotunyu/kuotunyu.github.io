@@ -3,90 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>數獨遊戲</title>
-    <link rel="stylesheet" href="style.css">
+    <title>遊戲樂園 - Game Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .header .description {
+            font-size: 1.1em;
+            color: #777;
+            line-height: 1.6;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .game-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .game-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .game-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .game-description {
+            font-size: 1.1em;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .game-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .game-features li {
+            color: #777;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .game-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .play-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1em;
+        }
+        
+        .footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .header .subtitle {
+                font-size: 1.1em;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-card {
+                padding: 25px;
+            }
+            
+            .game-icon {
+                font-size: 3em;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <header>
-            <h1>數獨遊戲 Sudoku</h1>
-            <div class="game-info">
-                <div class="timer">
-                    <span class="label">時間:</span>
-                    <span id="timer">00:00</span>
-                </div>
-                <div class="difficulty">
-                    <span class="label">難度:</span>
-                    <span id="difficulty">簡單</span>
-                </div>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 遊戲樂園</h1>
+            <div class="subtitle">Game Collection</div>
+            <div class="description">
+                歡迎來到我的遊戲世界！這裡收集了各種有趣的小遊戲，<br>
+                使用純 HTML、CSS 和 JavaScript 開發，無需下載，立即遊玩！
             </div>
-        </header>
+        </div>
         
-        <main>
-            <div class="sudoku-container">
-                <div class="sudoku-grid" id="sudoku-grid">
-                    <!-- 數獨格子會由 JavaScript 動態生成 -->
+        <div class="games-grid">
+            <a href="sudoku.html" class="game-card">
+                <div class="game-icon">🔢</div>
+                <div class="game-title">數獨遊戲</div>
+                <div class="game-description">
+                    挑戰你的邏輯思維！經典的數獨遊戲，支援三種難度等級。
                 </div>
-                
-                <div class="number-panel">
-                    <div class="numbers">
-                        <button class="number-btn" data-number="1">1</button>
-                        <button class="number-btn" data-number="2">2</button>
-                        <button class="number-btn" data-number="3">3</button>
-                        <button class="number-btn" data-number="4">4</button>
-                        <button class="number-btn" data-number="5">5</button>
-                        <button class="number-btn" data-number="6">6</button>
-                        <button class="number-btn" data-number="7">7</button>
-                        <button class="number-btn" data-number="8">8</button>
-                        <button class="number-btn" data-number="9">9</button>
-                    </div>
-                    <div class="action-buttons">
-                        <button id="erase-btn" class="action-btn">清除</button>
-                        <button id="hint-btn" class="action-btn">提示</button>
-                        <button id="validate-btn" class="action-btn">驗證</button>
-                    </div>
-                </div>
-            </div>
+                <ul class="game-features">
+                    <li>三種難度等級</li>
+                    <li>智能提示系統</li>
+                    <li>即時錯誤檢測</li>
+                    <li>計時功能</li>
+                </ul>
+                <button class="play-btn">立即遊玩</button>
+            </a>
             
-            <div class="control-panel">
-                <div class="difficulty-selector">
-                    <label>選擇難度:</label>
-                    <select id="difficulty-select">
-                        <option value="easy">簡單 (40個空格)</option>
-                        <option value="medium">中等 (50個空格)</option>
-                        <option value="hard">困難 (55個空格)</option>
-                    </select>
+            <a href="tic-tac-toe.html" class="game-card">
+                <div class="game-icon">🐱🐶</div>
+                <div class="game-title">井字遊戲</div>
+                <div class="game-description">
+                    可愛的貓咪狗狗井字遊戲，支援雙人對戰和電腦對戰。
                 </div>
-                <div class="game-buttons">
-                    <button id="new-game-btn" class="control-btn">新遊戲</button>
-                    <button id="pause-btn" class="control-btn">暫停</button>
-                    <button id="reset-btn" class="control-btn">重置</button>
-                    <button id="solution-btn" class="control-btn">顯示答案</button>
-                </div>
-            </div>
-        </main>
+                <ul class="game-features">
+                    <li>雙人對戰模式</li>
+                    <li>智能電腦對戰</li>
+                    <li>可愛動物主題</li>
+                    <li>流暢動畫效果</li>
+                </ul>
+                <button class="play-btn">立即遊玩</button>
+            </a>
+        </div>
         
-        <div class="message-panel" id="message-panel">
-            <div class="message" id="message"></div>
+        <div class="footer">
+            <p>🚀 更多遊戲敬請期待！</p>
+            <p>由 <a href="https://github.com/kuotunyu" target="_blank">kuotunyu</a> 開發 | 
+               使用 <a href="https://claude.ai/code" target="_blank">Claude Code</a> 協助開發</p>
         </div>
     </div>
-    
-    <!-- 遊戲完成模態框 -->
-    <div class="modal" id="victory-modal" style="display: none;">
-        <div class="modal-content">
-            <h2>🎉 恭喜完成！</h2>
-            <p>您成功完成了數獨遊戲！</p>
-            <div class="stats">
-                <p>完成時間: <span id="final-time"></span></p>
-                <p>難度: <span id="final-difficulty"></span></p>
-            </div>
-            <div class="modal-buttons">
-                <button id="play-again-btn">再玩一次</button>
-                <button id="close-modal-btn">關閉</button>
-            </div>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
 </body>
 </html>
