@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數獨遊戲</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>數獨遊戲 Sudoku</h1>
+            <div class="game-info">
+                <div class="timer">
+                    <span class="label">時間:</span>
+                    <span id="timer">00:00</span>
+                </div>
+                <div class="difficulty">
+                    <span class="label">難度:</span>
+                    <span id="difficulty">簡單</span>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="sudoku-container">
+                <div class="sudoku-grid" id="sudoku-grid">
+                    <!-- 數獨格子會由 JavaScript 動態生成 -->
+                </div>
+                
+                <div class="number-panel">
+                    <div class="numbers">
+                        <button class="number-btn" data-number="1">1</button>
+                        <button class="number-btn" data-number="2">2</button>
+                        <button class="number-btn" data-number="3">3</button>
+                        <button class="number-btn" data-number="4">4</button>
+                        <button class="number-btn" data-number="5">5</button>
+                        <button class="number-btn" data-number="6">6</button>
+                        <button class="number-btn" data-number="7">7</button>
+                        <button class="number-btn" data-number="8">8</button>
+                        <button class="number-btn" data-number="9">9</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="erase-btn" class="action-btn">清除</button>
+                        <button id="hint-btn" class="action-btn">提示</button>
+                        <button id="validate-btn" class="action-btn">驗證</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <div class="difficulty-selector">
+                    <label>選擇難度:</label>
+                    <select id="difficulty-select">
+                        <option value="easy">簡單 (40個空格)</option>
+                        <option value="medium">中等 (50個空格)</option>
+                        <option value="hard">困難 (55個空格)</option>
+                    </select>
+                </div>
+                <div class="game-buttons">
+                    <button id="new-game-btn" class="control-btn">新遊戲</button>
+                    <button id="pause-btn" class="control-btn">暫停</button>
+                    <button id="reset-btn" class="control-btn">重置</button>
+                    <button id="solution-btn" class="control-btn">顯示答案</button>
+                </div>
+            </div>
+        </main>
+        
+        <div class="message-panel" id="message-panel">
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+    
+    <!-- 遊戲完成模態框 -->
+    <div class="modal" id="victory-modal" style="display: none;">
+        <div class="modal-content">
+            <h2>🎉 恭喜完成！</h2>
+            <p>您成功完成了數獨遊戲！</p>
+            <div class="stats">
+                <p>完成時間: <span id="final-time"></span></p>
+                <p>難度: <span id="final-difficulty"></span></p>
+            </div>
+            <div class="modal-buttons">
+                <button id="play-again-btn">再玩一次</button>
+                <button id="close-modal-btn">關閉</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
