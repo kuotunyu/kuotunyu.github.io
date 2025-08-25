@@ -2,8 +2,6 @@
 
 一個功能完整的線上數獨遊戲，使用純 HTML、CSS 和 JavaScript 開發。
 
-![數獨遊戲截圖](https://via.placeholder.com/600x400/667eea/ffffff?text=Sudoku+Game)
-
 ## 線上遊玩
 
 **[立即遊玩](https://kuotunyu.github.io/)**
